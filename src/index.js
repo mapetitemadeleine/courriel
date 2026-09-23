@@ -79,7 +79,8 @@ async function accuser(env, adresse) {
 /* La lettre telle qu'elle arrive dans la boîte de Laurence : l'expéditeur est
    posé en « répondre à », donc un simple Répondre suffit. */
 async function faireSuivre(env, m) {
-  if (!env.RESEND_API_KEY) return;
+  console.log('formulaire reçu de', m.adresse, '— sujet :', m.sujet);
+  if (!env.RESEND_API_KEY) { console.log('ECHEC : RESEND_API_KEY absent'); return; }
   const corps = [
     'Nom : ' + m.nom,
     'Adresse : ' + m.adresse,
@@ -89,7 +90,7 @@ async function faireSuivre(env, m) {
     m.message
   ].join('\n');
   try {
-    await fetch('https://api.resend.com/emails', {
+    const r = await fetch('https://api.resend.com/emails', {
       method: 'POST',
       headers: { 'Authorization': 'Bearer ' + env.RESEND_API_KEY, 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -102,7 +103,8 @@ async function faireSuivre(env, m) {
         headers: { 'Auto-Submitted': 'auto-generated' }
       })
     });
-  } catch (e) {}
+    console.log('formulaire → boîte : Resend a répondu', r.status, await r.text());
+  } catch (e) { console.log('ECHEC formulaire → boîte —', String(e)); }
 }
 
 async function fetchSite(requete, env) {
@@ -152,7 +154,7 @@ async function fetchSite(requete, env) {
       try { corps = await requete.json(); } catch (e) {}
       /* Le champ « ville » est invisible dans la page : seul un robot le
          remplit. On répond poliment, et rien n'est gardé. */
-      if (propre(corps.ville, 60)) return repondre({ ok: true });
+      if (propre(corps.mpm_piege, 60) || propre(corps.ville, 60)) return repondre({ ok: true });
       const m = {
         nom: propre(corps.nom, 120),
         adresse: propre(corps.adresse, 200).toLowerCase(),
