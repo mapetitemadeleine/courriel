@@ -1,0 +1,120 @@
+/* L'accusé de réception de bonjour@mapetitemadeleine.org.
+   C'est ici, et seulement ici, qu'on retouche le texte : les deux versions
+   (français puis anglais) et le sujet de la lettre. Le reste du Worker n'y
+   touche pas. */
+
+export const DE = 'Laurence — Ma petite madeleine <bonjour@mapetitemadeleine.org>';
+
+export const SUJET = 'Votre message est bien arrivé · Your message has arrived';
+
+export const TEXTE = [
+  'Bonjour,',
+  '',
+  'Votre message est bien arrivé, j\u2019en prends connaissance au plus vite.',
+  'Je vous réponds en personne d\u2019ici deux jours.',
+  '',
+  'À très bientôt,',
+  'Laurence',
+  'Ma petite madeleine — mapetitemadeleine.org',
+  '',
+  '— — —',
+  '',
+  'Hello,',
+  '',
+  'Thank you for your message — it has arrived safely.',
+  'I will write back to you personally within two days.',
+  '',
+  'See you very soon,',
+  'Laurence',
+  'Ma petite madeleine — mapetitemadeleine.org',
+  '',
+  'Casa Mimosa LLC, 1209 Mountain Road Pl NE, Ste N, Albuquerque, NM 87110, USA'
+].join('\n');
+
+/* Le courriel lui-même : tables imbriquées, styles en ligne, pas d'image ni
+   de police chargée — c'est ce qui survit à Gmail, Outlook et Apple Mail. */
+export const HTML = `<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light dark">
+<title>Votre message est bien arrivé</title>
+</head>
+<body style="margin:0; padding:0; background-color:#EFE7D7;">
+<span style="display:none; font-size:1px; color:#EFE7D7; line-height:1px; max-height:0; max-width:0; opacity:0; overflow:hidden;">Votre lettre est bien arrivée, je vous réponds d&rsquo;ici deux jours. Your message has arrived safely.</span>
+<table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="background-color:#EFE7D7;">
+<tr>
+<td align="center" style="padding:28px 12px 34px 12px;">
+
+<table role="presentation" cellpadding="0" cellspacing="0" border="0" width="600" style="width:600px; max-width:600px; background-color:#FBF6EC; border:1px solid #E2CFA2;">
+
+<tr>
+<td align="center" style="padding:30px 32px 0 32px;">
+<div style="font-family:Georgia,'Times New Roman',serif; font-size:11px; letter-spacing:3px; text-transform:uppercase; color:#8F6518; mso-line-height-rule:exactly; line-height:16px;">Classe de fran&ccedil;ais</div>
+<div style="font-family:Georgia,'Times New Roman',serif; font-style:italic; font-size:30px; color:#1C2B4F; mso-line-height-rule:exactly; line-height:38px; padding-top:6px;">Ma petite madeleine</div>
+</td>
+</tr>
+
+<tr>
+<td align="center" style="padding:18px 32px 0 32px;">
+<table role="presentation" cellpadding="0" cellspacing="0" border="0" width="260" style="width:260px;">
+<tr>
+<td width="100" valign="middle" style="width:100px;"><div style="height:1px; font-size:0; mso-line-height-rule:exactly; line-height:1px; background-color:#E2CFA2;">&nbsp;</div></td>
+<td width="60" align="center" style="width:60px; font-family:Georgia,'Times New Roman',serif; font-size:15px; color:#B8862B; mso-line-height-rule:exactly; line-height:15px;">&#9884;</td>
+<td width="100" valign="middle" style="width:100px;"><div style="height:1px; font-size:0; mso-line-height-rule:exactly; line-height:1px; background-color:#E2CFA2;">&nbsp;</div></td>
+</tr>
+</table>
+</td>
+</tr>
+
+<tr>
+<td style="padding:24px 40px 0 40px; font-family:Georgia,'Times New Roman',serif; font-size:17px; color:#1C2B4F; mso-line-height-rule:exactly; line-height:28px;">
+<p style="margin:0 0 16px 0;">Bonjour,</p>
+<p style="margin:0 0 16px 0;">Votre message est bien arriv&eacute;, j&rsquo;en prends connaissance au plus vite.</p>
+<p style="margin:0 0 16px 0;">Je vous r&eacute;ponds en personne d&rsquo;ici deux jours.</p>
+<p style="margin:0 0 4px 0;">&Agrave; tr&egrave;s bient&ocirc;t,</p>
+<p style="margin:0; font-style:italic; font-size:19px; color:#8F6518;">Laurence</p>
+</td>
+</tr>
+
+<tr>
+<td align="center" style="padding:26px 40px 0 40px;">
+<table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="width:100%;">
+<tr><td height="1" style="height:1px; background-color:#E2CFA2; font-size:0; line-height:1px;">&nbsp;</td></tr>
+</table>
+</td>
+</tr>
+
+<tr>
+<td style="padding:22px 40px 0 40px; font-family:Georgia,'Times New Roman',serif; font-size:16px; color:#3A4761; mso-line-height-rule:exactly; line-height:27px;">
+<p style="margin:0 0 14px 0;">Hello,</p>
+<p style="margin:0 0 14px 0;">Thank you for your message &mdash; it has arrived safely.</p>
+<p style="margin:0 0 14px 0;">I will write back to you personally within two days.</p>
+<p style="margin:0 0 4px 0;">See you very soon,</p>
+<p style="margin:0; font-style:italic; font-size:18px; color:#8F6518;">Laurence</p>
+</td>
+</tr>
+
+<tr>
+<td align="center" style="padding:30px 32px 32px 32px;">
+<table role="presentation" cellpadding="0" cellspacing="0" border="0" width="100%" style="width:100%; background-color:#1C2B4F;">
+<tr>
+<td align="center" style="padding:20px 24px 22px 24px;">
+<a href="https://mapetitemadeleine.org" style="display:block; font-family:Georgia,'Times New Roman',serif; font-size:17px; color:#F3E4C0; text-decoration:none; mso-line-height-rule:exactly; line-height:24px;">mapetitemadeleine.org</a>
+<div style="font-family:Georgia,'Times New Roman',serif; font-size:12px; color:#AFBBD2; mso-line-height-rule:exactly; line-height:19px; padding-top:8px;">Exercices quotidiens, corrig&eacute;s et Jeu-Clic</div>
+</td>
+</tr>
+</table>
+<div style="font-family:Georgia,'Times New Roman',serif; font-size:11px; color:#5F5847; mso-line-height-rule:exactly; line-height:18px; padding-top:16px;">Cette lettre est automatique&nbsp;: votre message est bien arriv&eacute;, la r&eacute;ponse suivra de ma main.<br>This is an automatic acknowledgement; a personal reply will follow.</div>
+<div style="font-family:Georgia,'Times New Roman',serif; font-size:11px; color:#6F6857; mso-line-height-rule:exactly; line-height:18px; padding-top:8px;">Casa Mimosa LLC &middot; 1209 Mountain Road Pl NE, Ste N &middot; Albuquerque, NM 87110 &middot; USA</div>
+</td>
+</tr>
+
+</table>
+
+</td>
+</tr>
+</table>
+</body>
+</html>`;
