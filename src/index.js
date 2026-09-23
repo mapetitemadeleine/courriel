@@ -36,10 +36,15 @@ export default {
     /* D'abord le courrier arrive à bon port : même si la réponse échoue,
        la lettre ne se perd pas. */
     if (env.BOITE) {
-      try { await message.forward(env.BOITE); } catch (e) {}
+      try { await message.forward(env.BOITE); console.log('suivie vers', env.BOITE); }
+      catch (e) { console.log('ECHEC du renvoi vers', env.BOITE, '—', String(e)); }
+    } else {
+      console.log('ECHEC : la variable BOITE est vide');
     }
 
-    if (!env.RESEND_API_KEY || !meriteReponse(message)) return;
+    console.log('lettre de', message.from, 'pour', message.to);
+    if (!env.RESEND_API_KEY) { console.log('ECHEC : le secret RESEND_API_KEY est absent'); return; }
+    if (!meriteReponse(message)) { console.log('pas de réponse : lettre automatique ou interne'); return; }
 
     const de = adresse(message.from);
 
@@ -60,7 +65,7 @@ export default {
     }
 
     try {
-      await fetch('https://api.resend.com/emails', {
+      const r = await fetch('https://api.resend.com/emails', {
         method: 'POST',
         headers: {
           'Authorization': 'Bearer ' + env.RESEND_API_KEY,
@@ -76,6 +81,7 @@ export default {
           headers: entetes
         })
       });
-    } catch (e) {}
+      console.log('Resend a répondu', r.status, await r.text());
+    } catch (e) { console.log('ECHEC de l\'envoi Resend —', String(e)); }
   }
 };
