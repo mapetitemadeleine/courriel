@@ -1,6 +1,8 @@
 name = "courriel"
 main = "src/index.js"
 compatibility_date = "2026-09-01"
+# Sans cette ligne, chaque envoi sur GitHub efface les variables posées à la main.
+keep_vars = true
 
 # Garde la trace de chaque lettre : Workers & Pages → courriel → Logs.
 [observability]
@@ -17,3 +19,10 @@ enabled = true
 # [[kv_namespaces]]
 # binding = "MEMOIRE"
 # id = "<identifiant de l'espace KV>"
+
+# Le registre de l'école (inscriptions au Club, messages de « Nous écrire »).
+# L'identifiant se lit dans Storage & databases → D1 → madeleine-club.
+[[d1_databases]]
+binding = "REGISTRE"
+database_name = "madeleine-club"
+database_id = "c7aec393-ca51-4358-82d9-df23625913d6"
