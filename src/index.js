@@ -84,6 +84,38 @@ async function compterPartie(requete, env) {
   return vide;
 }
 
+/* ————— La provenance marquée —————
+   Le lien de la bio TikTok passe par ici (/de/tiktok) : on ajoute un au
+   total du jour, sans rien garder de la personne, et on l'envoie aussitôt
+   sur l'accueil du site. Le navigateur de TikTok efface la provenance ;
+   sans ce détour, ces visites se perdraient dans l'« accès direct ».
+   Le compte ne doit jamais retarder ni empêcher l'arrivée sur le site. */
+
+const PROVENANCES = ['tiktok', 'facebook'];
+let tableProvenancesPrete = false;
+
+async function compterProvenance(source, env, ctx) {
+  const suite = Response.redirect('https://mapetitemadeleine.org/', 302);
+  if (PROVENANCES.indexOf(source) < 0) return suite;
+  const compter = async () => {
+    try {
+      if (!tableProvenancesPrete) {
+        await env.REGISTRE.prepare(
+          'CREATE TABLE IF NOT EXISTS provenances (jour TEXT NOT NULL, source TEXT NOT NULL, ' +
+          'clics INTEGER NOT NULL DEFAULT 0, PRIMARY KEY (jour, source))'
+        ).run();
+        tableProvenancesPrete = true;
+      }
+      await env.REGISTRE.prepare(
+        'INSERT INTO provenances (jour, source, clics) VALUES (?1, ?2, 1) ' +
+        'ON CONFLICT(jour, source) DO UPDATE SET clics = clics + 1'
+      ).bind(new Date().toISOString().slice(0, 10), source).run();
+    } catch (e) { console.log('provenance —', String(e)); }
+  };
+  if (ctx && ctx.waitUntil) ctx.waitUntil(compter()); else await compter();
+  return suite;
+}
+
 function propre(v, n) {
   return String(v == null ? '' : v).replace(/\s+/g, ' ').trim().slice(0, n);
 }
@@ -144,9 +176,11 @@ async function faireSuivre(env, m) {
   } catch (e) { console.log('ECHEC formulaire → boîte —', String(e)); }
 }
 
-async function fetchSite(requete, env) {
+async function fetchSite(requete, env, ctx) {
   const url = new URL(requete.url);
   if (url.pathname === '/api/jeu') return compterPartie(requete, env);
+  const de = url.pathname.match(/^\/de\/([a-z]+)\/?$/);
+  if (de) return compterProvenance(de[1], env, ctx);
   const o = requete.headers.get('origin') || '';
   origine = ORIGINES.indexOf(o) >= 0 ? o : ORIGINES[0];
   if (requete.method === 'OPTIONS') {
