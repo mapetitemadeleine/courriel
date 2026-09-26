@@ -192,30 +192,12 @@ async function fetchSite(requete, env, ctx) {
       'Vary': 'Origin'
     } });
   }
+    /* L'inscription au Club a déménagé le 27 septembre 2026 : elle se fait sur
+       le site lui-même (mapetitemadeleine.org/api/club), avec un lien de
+       confirmation. Ici, plus rien ne s'inscrit : une adresse non confirmée ne
+       doit jamais entrer au registre. */
     if (url.pathname === '/api/club') {
-      if (requete.method !== 'POST') {
-        return repondre({ ok: false }, { status: 405 });
-      }
-      let corps = {};
-      try { corps = await requete.json(); } catch (e) {}
-      const adresse = String(corps.adresse || '').trim().toLowerCase();
-      if (adresse.length < 5 || adresse.indexOf('@') < 1) {
-        return repondre({ ok: false, mot: 'adresse incomplète' }, { status: 400 });
-      }
-      try {
-        await env.REGISTRE.prepare(
-          'INSERT INTO membres (adresse, venu_de, pays, ajoute_le) VALUES (?1, ?2, ?3, ?4) ' +
-          'ON CONFLICT(adresse) DO UPDATE SET vu_le = ?4'
-        ).bind(
-          adresse,
-          String(corps.venu_de || '').slice(0, 200),
-          requete.headers.get('cf-ipcountry') || '',
-          new Date().toISOString()
-        ).run();
-      } catch (e) {
-        return repondre({ ok: false, mot: 'registre indisponible' }, { status: 500 });
-      }
-      return repondre({ ok: true });
+      return repondre({ ok: false, mot: 'l’inscription se fait sur mapetitemadeleine.org' }, { status: 410 });
     }
 
     if (url.pathname === '/api/contact') {
