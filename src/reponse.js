@@ -3,7 +3,7 @@
    (français puis anglais) et le sujet de la lettre. Le reste du Worker n'y
    touche pas. */
 
-export const DE = 'Laurence — Ma petite madeleine <bonjour@mapetitemadeleine.org>';
+export const DE = 'Ma petite madeleine <bonjour@mapetitemadeleine.org>';
 
 export const SUJET = 'Votre message est bien arrivé · Your message has arrived';
 

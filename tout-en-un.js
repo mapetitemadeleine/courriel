@@ -6,7 +6,7 @@
    (français puis anglais) et le sujet de la lettre. Le reste du Worker n'y
    touche pas. */
 
-const DE = 'Laurence — Ma petite madeleine <bonjour@mapetitemadeleine.org>';
+const DE = 'Ma petite madeleine <bonjour@mapetitemadeleine.org>';
 
 const SUJET = 'Votre message est bien arrivé · Your message has arrived';
 
